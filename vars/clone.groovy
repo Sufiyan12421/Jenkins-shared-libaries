@@ -1,5 +1,11 @@
-def call(String url, String branch){
-  echo "This is clonning the code"
-  git url: "${url}" ,branch: "${branch}"
-  echo "Code Clonning Successfully"
+def call(String url, String branch = 'main') {
+    echo "🔄 Cloning repository from ${url} (branch: ${branch})"
+    
+    checkout([
+        $class: 'GitSCM',
+        branches: [[name: branch]],
+        userRemoteConfigs: [[url: url]]
+    ])
+    
+    echo "✅ Code cloned successfully."
 }
