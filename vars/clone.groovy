@@ -1,11 +1,8 @@
-def call(String url, String branch = 'main') {
-    echo "🔄 Cloning repository from ${url} (branch: ${branch})"
-    
-    checkout([
-        $class: 'GitSCM',
-        branches: [[name: branch]],
-        userRemoteConfigs: [[url: url]]
-    ])
-    
-    echo "✅ Code cloned successfully."
+def call(Map config = [:]) {
+    def repoUrl = config.repoUrl ?: error("Repository URL is required")
+    def branch = config.branch ?: 'main'
+
+    echo "This is cloning the code"
+    git url: repoUrl, branch: branch
+    echo "Code cloned successfully"
 }
